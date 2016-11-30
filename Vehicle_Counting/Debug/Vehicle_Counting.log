@@ -1,0 +1,18 @@
+﻿Build started 30/11/2016 1:39:13 CH.
+     1>Project "E:\cpp projects\NativeProj\Vehicle_Counting\Vehicle_Counting.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IE:\opencv\build\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Blob.cpp VehicleCounting.cpp main.cpp
+         main.cpp
+         VehicleCounting.cpp
+         Blob.cpp
+         Generating Code...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"E:\cpp projects\NativeProj\Debug\Vehicle_Counting.lib" /NOLOGO Debug\Blob.obj
+         Debug\VehicleCounting.obj
+         Debug\main.obj
+         Vehicle_Counting.vcxproj -> E:\cpp projects\NativeProj\Debug\Vehicle_Counting.lib
+     1>Done Building Project "E:\cpp projects\NativeProj\Vehicle_Counting\Vehicle_Counting.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.34

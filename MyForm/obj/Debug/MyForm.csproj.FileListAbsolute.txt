@@ -1,0 +1,11 @@
+E:\cpp projects\NativeProj\MyForm\bin\Debug\MyForm.exe.config
+E:\cpp projects\NativeProj\MyForm\bin\Debug\MyForm.exe
+E:\cpp projects\NativeProj\MyForm\bin\Debug\MyForm.pdb
+E:\cpp projects\NativeProj\MyForm\bin\Debug\managedDllWrapper.dll
+E:\cpp projects\NativeProj\MyForm\bin\Debug\managedDllWrapper.pdb
+E:\cpp projects\NativeProj\MyForm\obj\Debug\MyForm.Form1.resources
+E:\cpp projects\NativeProj\MyForm\obj\Debug\MyForm.Properties.Resources.resources
+E:\cpp projects\NativeProj\MyForm\obj\Debug\MyForm.csproj.GenerateResource.Cache
+E:\cpp projects\NativeProj\MyForm\obj\Debug\MyForm.exe
+E:\cpp projects\NativeProj\MyForm\obj\Debug\MyForm.pdb
+E:\cpp projects\NativeProj\MyForm\obj\Debug\MyForm.csprojResolveAssemblyReference.cache
