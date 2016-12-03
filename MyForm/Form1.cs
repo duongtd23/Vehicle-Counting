@@ -80,7 +80,10 @@ namespace MyForm
             {
                 counting = true;
                 //khởi tạo đối tượng
-                myVehicleCountingWrapper = new MyVehicleCountingWrapper(txtInput.Text);
+                int type_count = typeCounting.SelectedIndex;
+                System.Diagnostics.Debug.WriteLine("DUongthdg" + type_count);
+                myVehicleCountingWrapper = new MyVehicleCountingWrapper(txtInput.Text,
+                                        type_count);
                 thread = new Thread(new ThreadStart(this.startCounting));
                 thread.Start();
 
@@ -92,6 +95,7 @@ namespace MyForm
             else
             {
                 thread.Abort();
+                myVehicleCountingWrapper.stopCounting();
                 counting = false;
                 myTimer.Stop();
                 btnStartStop.Text = "Start";
@@ -112,12 +116,22 @@ namespace MyForm
 
         private void MyTimer_Tick(object sender, EventArgs e)
         {
-            int motorCount = myVehicleCountingWrapper.getMotorCount();
-            //System.Diagnostics.Debug.WriteLine("DUongthdg"+ motorCount);
-            countMotor.Text = motorCount + "";
+            if (typeCounting.SelectedIndex == myVehicleCountingWrapper.COUNT_TOP_TO_DOWN)
+            {
+                int motorCount = myVehicleCountingWrapper.getMotorCountTTD();
+                countMotor.Text = motorCount + "";
 
-            int carCount = myVehicleCountingWrapper.getCarCount();
-            countCar.Text = carCount + "";
+                int carCount = myVehicleCountingWrapper.getCarCountTTD();
+                countCar.Text = carCount + "";
+            }
+            else if (typeCounting.SelectedIndex == myVehicleCountingWrapper.COUNT_DOWN_TO_TOP)
+            {
+                int motorCount = myVehicleCountingWrapper.getMotorCountDTT();
+                countMotor.Text = motorCount + "";
+
+                int carCount = myVehicleCountingWrapper.getCarCountDTT();
+                countCar.Text = carCount + "";
+            }
         }
     }
 }

@@ -9,8 +9,9 @@
 
 //implement function
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-MyVehicleCounting::MyVehicleCounting(std::string input){
+MyVehicleCounting::MyVehicleCounting(std::string input, int count_type){
 	this->input = input;
+	this->count_type = count_type;
 }
 
 //main function - call this from C#
@@ -19,6 +20,7 @@ MyVehicleCounting::MyVehicleCounting(std::string input){
  * writeVideoOutput: true to write
  */
 int MyVehicleCounting::functionMain(std::string ouput, bool writeVideoOutput){
+	isCounting = true;
 	cv::VideoWriter video;
 	cv::Size video_size = cv::Size(640, 360);
 	if(writeVideoOutput)
@@ -37,25 +39,9 @@ int MyVehicleCounting::functionMain(std::string ouput, bool writeVideoOutput){
 		return(0);
 	}
 
-	cv::Mat tempImg1, tempImg2;
-	capVideo.read(tempImg1);
-	capVideo.read(tempImg2);
-
-	imgFrame1 = cv::Mat(cv::Size(640, 460), CV_8UC3);
-	imgFrame2 = cv::Mat(cv::Size(640, 460), CV_8UC3);
-
-	cv::Mat bgImg = cv::imread("../dataset/img.jpg");
-
-	cv::Mat roi;
-	roi = cv::Mat(imgFrame1, cv::Rect(0, 0, 640, 100));
-	bgImg.copyTo(roi);
-	roi = cv::Mat(imgFrame1, cv::Rect(0, 100, 640, 360));
-	tempImg1.copyTo(roi);
-
-	roi = cv::Mat(imgFrame2, cv::Rect(0, 0, 640, 100));
-	bgImg.copyTo(roi);
-	roi = cv::Mat(imgFrame2, cv::Rect(0, 100, 640, 360));
-	tempImg2.copyTo(roi);
+	//cv::Mat tempImg1, tempImg2;
+	capVideo.read(imgFrame1);
+	capVideo.read(imgFrame2);
 
 	int intHorizontalLinePosition = (int)std::round((double)imgFrame1.rows * linePos);
 
@@ -71,7 +57,7 @@ int MyVehicleCounting::functionMain(std::string ouput, bool writeVideoOutput){
 
 	int frameCount = 2;
 
-	while (capVideo.isOpened() && chCheckForEscKey != 27) {
+	while (capVideo.isOpened() && chCheckForEscKey != 27 && isCounting) {
 
 		std::vector<Blob> currentFrameBlobs;
 
@@ -151,8 +137,11 @@ int MyVehicleCounting::functionMain(std::string ouput, bool writeVideoOutput){
 
 		drawBlobInfoOnImage(blobs, imgFrame2Copy);
 
-		bool blnAtLeastOneBlobCrossedTheLine = checkIfBlobsCrossedTheLine(blobs, intHorizontalLinePosition, carCount, motorCount);
-
+		bool blnAtLeastOneBlobCrossedTheLine;
+		if (count_type == COUNT_DOWN_TO_TOP)
+			blnAtLeastOneBlobCrossedTheLine = checkIfBlobsCrossedTheLineDTT(blobs, intHorizontalLinePosition, carCountDTT, motorCountDTT);
+		else if (count_type == COUNT_TOP_TO_DOWN)
+			blnAtLeastOneBlobCrossedTheLine = checkIfBlobsCrossedTheLineTTD(blobs, intHorizontalLinePosition, carCountTTD, motorCountTTD);
 		if (blnAtLeastOneBlobCrossedTheLine == true) {
 			cv::line(imgFrame2Copy, crossingLine[0], crossingLine[1], SCALAR_GREEN, 2);
 		}
@@ -160,9 +149,12 @@ int MyVehicleCounting::functionMain(std::string ouput, bool writeVideoOutput){
 			cv::line(imgFrame2Copy, crossingLine[0], crossingLine[1], SCALAR_RED, 2);
 		}
 
-		drawCarCountOnImage(carCount, motorCount, imgFrame2Copy);
+		if (count_type == COUNT_TOP_TO_DOWN)
+			drawCarCountOnImage(carCountTTD, motorCountTTD, imgFrame2Copy);
+		else if (count_type == COUNT_DOWN_TO_TOP)
+			drawCarCountOnImage(carCountDTT, motorCountDTT, imgFrame2Copy);
 
-		cv::imshow("imgFrame2Copy", imgFrame2Copy);
+		cv::imshow("Output", imgFrame2Copy);
 
 		//cv::waitKey(0);                 // uncomment this line to go frame by frame for debugging
 
@@ -311,7 +303,7 @@ void MyVehicleCounting::drawAndShowContours(cv::Size imageSize, std::vector<Blob
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-bool MyVehicleCounting::checkIfBlobsCrossedTheLine(std::vector<Blob> &blobs, int &intHorizontalLinePosition, int &carCount, int &motorCount) {
+bool MyVehicleCounting::checkIfBlobsCrossedTheLineDTT(std::vector<Blob> &blobs, int &intHorizontalLinePosition, int &carCount, int &motorCount) {
 	bool blnAtLeastOneBlobCrossedTheLine = false;
 
 	for (auto blob : blobs) {
@@ -319,20 +311,19 @@ bool MyVehicleCounting::checkIfBlobsCrossedTheLine(std::vector<Blob> &blobs, int
 		if (blob.blnStillBeingTracked == true && blob.centerPositions.size() >= 2) {
 			int prevFrameIndex = (int)blob.centerPositions.size() - 2;
 			int currFrameIndex = (int)blob.centerPositions.size() - 1;
-			bool check = true;
-			
-			int minLop = (blob.centerPositions.size() > 10) ? (blob.centerPositions.size() - 10) : 1;
-			//minLop = blob.centerPositions.size() - 1;
-			for (int fi = blob.centerPositions.size() - 2; fi >= minLop; fi--) {
-				cv::Point point = blob.centerPositions[fi];
-				if (point.y > intHorizontalLinePosition) {
-					check = false;
-					break;
-				}
-			}
+			//bool check = true;
+			//
+			//int minLop = (blob.centerPositions.size() > 10) ? (blob.centerPositions.size() - 10) : 1;
+			////minLop = blob.centerPositions.size() - 1;
+			//for (int fi = blob.centerPositions.size() - 2; fi >= minLop; fi--) {
+			//	cv::Point point = blob.centerPositions[fi];
+			//	if (point.y > intHorizontalLinePosition) {
+			//		check = false;
+			//		break;
+			//	}
+			//}
 
-			if (
-				blob.centerPositions[prevFrameIndex].y > intHorizontalLinePosition && 
+			if (blob.centerPositions[prevFrameIndex].y > intHorizontalLinePosition && 
 				blob.centerPositions[currFrameIndex].y <= intHorizontalLinePosition) {
 				if (blob.currentBoundingRect.width * blob.currentBoundingRect.height > MIN_AREA)
 					carCount++;
@@ -346,6 +337,31 @@ bool MyVehicleCounting::checkIfBlobsCrossedTheLine(std::vector<Blob> &blobs, int
 
 	return blnAtLeastOneBlobCrossedTheLine;
 }
+
+bool MyVehicleCounting::checkIfBlobsCrossedTheLineTTD(std::vector<Blob> &blobs, int &intHorizontalLinePosition, int &carCount, int &motorCount) {
+	bool blnAtLeastOneBlobCrossedTheLine = false;
+
+	for (auto blob : blobs) {
+
+		if (blob.blnStillBeingTracked == true && blob.centerPositions.size() >= 2) {
+			int prevFrameIndex = (int)blob.centerPositions.size() - 2;
+			int currFrameIndex = (int)blob.centerPositions.size() - 1;
+
+			if (blob.centerPositions[prevFrameIndex].y < intHorizontalLinePosition &&
+				blob.centerPositions[currFrameIndex].y >= intHorizontalLinePosition) {
+				if (blob.currentBoundingRect.width * blob.currentBoundingRect.height > MIN_AREA)
+					carCount++;
+				else
+					motorCount++;
+				blnAtLeastOneBlobCrossedTheLine = true;
+			}
+		}
+
+	}
+
+	return blnAtLeastOneBlobCrossedTheLine;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 void MyVehicleCounting::drawBlobInfoOnImage(std::vector<Blob> &blobs, cv::Mat &imgFrame2Copy) {
@@ -382,14 +398,30 @@ void MyVehicleCounting::drawCarCountOnImage(int &carCount, int &motorCount, cv::
 	ptTextBottomLeftPosition.x = imgFrame2Copy.cols - 1 - (int)((double)textSize.width * 1.25);
 	ptTextBottomLeftPosition.y = (int)((double)textSize.height * 1.25);
 
+	cv::copyMakeBorder(imgFrame2Copy, imgFrame2Copy, 80, 0, 0, 0, cv::BORDER_CONSTANT, cv::Scalar(0, 0, 0, 0));
+	
 	cv::putText(imgFrame2Copy, std::to_string(carCount), ptTextBottomLeftPosition, intFontFace, dblFontScale, SCALAR_GREEN, intFontThickness);
 	cv::putText(imgFrame2Copy, std::to_string(motorCount), cv::Point(10,50), intFontFace, dblFontScale, SCALAR_GREEN, intFontThickness);
 }
 
-int MyVehicleCounting::getMotorCount(){
-	return motorCount;
+int MyVehicleCounting::getMotorCountDTT(){
+	return motorCountDTT;
+}
+int MyVehicleCounting::getCarCountDTT(){
+	return carCountDTT;
+}
+int MyVehicleCounting::getMotorCountTTD(){
+	return motorCountTTD;
+}
+int MyVehicleCounting::getCarCountTTD(){
+	return carCountTTD;
 }
 
-int MyVehicleCounting::getCarCount(){
-	return carCount;
+//destroy
+void MyVehicleCounting::destroy(){
+	carCountDTT = 0;
+	carCountTTD = 0;
+	motorCountDTT = 0;
+	motorCountTTD = 0;
+	isCounting = false;
 }

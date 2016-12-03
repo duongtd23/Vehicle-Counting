@@ -37,6 +37,8 @@ public:
 	int maxRatio = 1.5;
 	int minDiagonalSize = 60;
 
+	int VIDEO_WIDTH = 360;
+
 	//file path video input - must use absolute path
 	std::string input;
 	cv::VideoCapture capVideo;
@@ -50,21 +52,37 @@ public:
 	cv::Point crossingLine[2];
 
 	//save number of car and motor
-	int carCount = 0, motorCount = 0;
+	int carCountDTT = 0;
+	int motorCountDTT = 0;
+	int carCountTTD = 0;
+	int motorCountTTD = 0;
+
+	const int COUNT_TOP_TO_DOWN = 0;
+	const int COUNT_DOWN_TO_TOP = 1;
+	const int COUNT_COMBINE = 2;
+
+	int count_type = 0;
+
+	bool isCounting = false;
 
 	// function prototypes ////////////////////////////////////////////////////////////////////////////
-	MyVehicleCounting(std::string input);
+	MyVehicleCounting(std::string input, int count_type);
 	void matchCurrentFrameBlobsToExistingBlobs(std::vector<Blob> &existingBlobs, std::vector<Blob> &currentFrameBlobs);
 	void addBlobToExistingBlobs(Blob &currentFrameBlob, std::vector<Blob> &existingBlobs, int &intIndex);
 	void addNewBlob(Blob &currentFrameBlob, std::vector<Blob> &existingBlobs);
 	double distanceBetweenPoints(cv::Point point1, cv::Point point2);
 	void drawAndShowContours(cv::Size imageSize, std::vector<std::vector<cv::Point> > contours, std::string strImageName);
 	void drawAndShowContours(cv::Size imageSize, std::vector<Blob> blobs, std::string strImageName);
-	bool checkIfBlobsCrossedTheLine(std::vector<Blob> &blobs, int &intHorizontalLinePosition, int &carCount, int &motorCount);
+	bool checkIfBlobsCrossedTheLineDTT(std::vector<Blob> &blobs, int &intHorizontalLinePosition, int &carCount, int &motorCount);
+	bool checkIfBlobsCrossedTheLineTTD(std::vector<Blob> &blobs, int &intHorizontalLinePosition, int &carCount, int &motorCount);
 	void drawBlobInfoOnImage(std::vector<Blob> &blobs, cv::Mat &imgFrame2Copy);
 	void drawCarCountOnImage(int &carCount, int &motorCount, cv::Mat &imgFrame2Copy);
 	int functionMain(std::string ouput, bool writeVideoOutput);
 
-	int getMotorCount();
-	int getCarCount();
+	int getMotorCountDTT();
+	int getCarCountDTT();
+	int getMotorCountTTD();
+	int getCarCountTTD();
+
+	void destroy();
 };
