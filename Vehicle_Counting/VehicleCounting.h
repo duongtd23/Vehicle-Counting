@@ -30,6 +30,13 @@ public:
 	//min distance of 2 blob to track the same id
 	double minDistanceToCheckMatch = 0.5;
 
+	int minArea = 500;
+	int minWidth = 30;
+	int minHeight = 50;
+	int minRatio = 0.3;
+	int maxRatio = 1.5;
+	int minDiagonalSize = 60;
+
 	//file path video input - must use absolute path
 	std::string input;
 	cv::VideoCapture capVideo;
@@ -59,4 +66,5 @@ public:
 	int functionMain(std::string ouput, bool writeVideoOutput);
 
 	int getMotorCount();
+	int getCarCount();
 };

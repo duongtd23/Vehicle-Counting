@@ -37,8 +37,25 @@ int MyVehicleCounting::functionMain(std::string ouput, bool writeVideoOutput){
 		return(0);
 	}
 
-	capVideo.read(imgFrame1);
-	capVideo.read(imgFrame2);
+	cv::Mat tempImg1, tempImg2;
+	capVideo.read(tempImg1);
+	capVideo.read(tempImg2);
+
+	imgFrame1 = cv::Mat(cv::Size(640, 460), CV_8UC3);
+	imgFrame2 = cv::Mat(cv::Size(640, 460), CV_8UC3);
+
+	cv::Mat bgImg = cv::imread("../dataset/img.jpg");
+
+	cv::Mat roi;
+	roi = cv::Mat(imgFrame1, cv::Rect(0, 0, 640, 100));
+	bgImg.copyTo(roi);
+	roi = cv::Mat(imgFrame1, cv::Rect(0, 100, 640, 360));
+	tempImg1.copyTo(roi);
+
+	roi = cv::Mat(imgFrame2, cv::Rect(0, 0, 640, 100));
+	bgImg.copyTo(roi);
+	roi = cv::Mat(imgFrame2, cv::Rect(0, 100, 640, 360));
+	tempImg2.copyTo(roi);
 
 	int intHorizontalLinePosition = (int)std::round((double)imgFrame1.rows * linePos);
 
@@ -106,13 +123,13 @@ int MyVehicleCounting::functionMain(std::string ouput, bool writeVideoOutput){
 		for (auto &convexHull : convexHulls) {
 			Blob possibleBlob(convexHull);
 
-			if (possibleBlob.currentBoundingRect.area() > 400 &&
-				possibleBlob.dblCurrentAspectRatio > 0.2 &&
-				possibleBlob.dblCurrentAspectRatio < 4.0 &&
-				possibleBlob.currentBoundingRect.width > 30 &&
-				possibleBlob.currentBoundingRect.height > 30 &&
-				possibleBlob.dblCurrentDiagonalSize > 60.0 &&
-				(cv::contourArea(possibleBlob.currentContour) / (double)possibleBlob.currentBoundingRect.area()) > 0.50) {
+			if (possibleBlob.currentBoundingRect.area() > minArea &&
+				possibleBlob.dblCurrentAspectRatio > minRatio &&
+				possibleBlob.dblCurrentAspectRatio < maxRatio &&
+				possibleBlob.currentBoundingRect.width > minWidth &&
+				possibleBlob.currentBoundingRect.height > minHeight &&
+				possibleBlob.dblCurrentDiagonalSize > minDiagonalSize &&
+				(cv::contourArea(possibleBlob.currentContour) / (double)possibleBlob.currentBoundingRect.area()) > minDistanceToCheckMatch) {
 				currentFrameBlobs.push_back(possibleBlob);
 			}
 		}
@@ -371,4 +388,8 @@ void MyVehicleCounting::drawCarCountOnImage(int &carCount, int &motorCount, cv::
 
 int MyVehicleCounting::getMotorCount(){
 	return motorCount;
+}
+
+int MyVehicleCounting::getCarCount(){
+	return carCount;
 }
