@@ -388,20 +388,21 @@ void MyVehicleCounting::drawBlobInfoOnImage(std::vector<Blob> &blobs, cv::Mat &i
 void MyVehicleCounting::drawCarCountOnImage(int &carCount, int &motorCount, cv::Mat &imgFrame2Copy) {
 
 	int intFontFace = CV_FONT_HERSHEY_SIMPLEX;
-	double dblFontScale = (imgFrame2Copy.rows * imgFrame2Copy.cols) / 200000.0;
+	//double dblFontScale = (imgFrame2Copy.rows * imgFrame2Copy.cols) / 200000.0;
+	double dblFontScale = 20;
 	int intFontThickness = (int)std::round(dblFontScale * 1.5);
 
 	cv::Size textSize = cv::getTextSize(std::to_string(carCount), intFontFace, dblFontScale, intFontThickness, 0);
 
-	cv::Point ptTextBottomLeftPosition;
+	/*cv::Point ptTextBottomLeftPosition;
 
 	ptTextBottomLeftPosition.x = imgFrame2Copy.cols - 1 - (int)((double)textSize.width * 1.25);
 	ptTextBottomLeftPosition.y = (int)((double)textSize.height * 1.25);
-
+*/
 	cv::copyMakeBorder(imgFrame2Copy, imgFrame2Copy, 80, 0, 0, 0, cv::BORDER_CONSTANT, cv::Scalar(0, 0, 0, 0));
 	
-	cv::putText(imgFrame2Copy, std::to_string(carCount), ptTextBottomLeftPosition, intFontFace, dblFontScale, SCALAR_GREEN, intFontThickness);
-	cv::putText(imgFrame2Copy, std::to_string(motorCount), cv::Point(10,50), intFontFace, dblFontScale, SCALAR_GREEN, intFontThickness);
+	cv::putText(imgFrame2Copy, "CAR: " + std::to_string(carCount), cv::Point(10, 30), intFontFace, dblFontScale, SCALAR_GREEN, intFontThickness);
+	cv::putText(imgFrame2Copy, "MOTOR: " + std::to_string(motorCount), cv::Point(10,50), intFontFace, dblFontScale, SCALAR_GREEN, intFontThickness);
 }
 
 int MyVehicleCounting::getMotorCountDTT(){
