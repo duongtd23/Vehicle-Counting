@@ -1,18 +1,16 @@
-﻿Build started 30/11/2016 1:39:13 CH.
-     1>Project "E:\cpp projects\NativeProj\Vehicle_Counting\Vehicle_Counting.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 04/12/2016 10:02:30 CH.
+     1>Project "D:\IT Modern Issues\NativeProj\NativeProj\Vehicle_Counting\Vehicle_Counting.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IE:\opencv\build\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Blob.cpp VehicleCounting.cpp main.cpp
+         D:\Visual Studio 2013\Visual Studio 2013\VC\bin\CL.exe /c /IE:\opencv\build\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Blob.cpp VehicleCounting.cpp main.cpp
          main.cpp
+     1>d:\it modern issues\nativeproj\nativeproj\vehicle_counting\vehiclecounting.h(4): fatal error C1083: Cannot open include file: 'opencv2/core/core.hpp': No such file or directory
          VehicleCounting.cpp
+     1>d:\it modern issues\nativeproj\nativeproj\vehicle_counting\vehiclecounting.h(4): fatal error C1083: Cannot open include file: 'opencv2/core/core.hpp': No such file or directory
          Blob.cpp
+     1>d:\it modern issues\nativeproj\nativeproj\vehicle_counting\blob.h(6): fatal error C1083: Cannot open include file: 'opencv2/core/core.hpp': No such file or directory
          Generating Code...
-       Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"E:\cpp projects\NativeProj\Debug\Vehicle_Counting.lib" /NOLOGO Debug\Blob.obj
-         Debug\VehicleCounting.obj
-         Debug\main.obj
-         Vehicle_Counting.vcxproj -> E:\cpp projects\NativeProj\Debug\Vehicle_Counting.lib
-     1>Done Building Project "E:\cpp projects\NativeProj\Vehicle_Counting\Vehicle_Counting.vcxproj" (Rebuild target(s)).
+     1>Done Building Project "D:\IT Modern Issues\NativeProj\NativeProj\Vehicle_Counting\Vehicle_Counting.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:02.34
+Time Elapsed 00:00:04.88

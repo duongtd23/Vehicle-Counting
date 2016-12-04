@@ -9,3 +9,14 @@ E:\cpp projects\NativeProj\MyForm\obj\Debug\MyForm.csproj.GenerateResource.Cache
 E:\cpp projects\NativeProj\MyForm\obj\Debug\MyForm.exe
 E:\cpp projects\NativeProj\MyForm\obj\Debug\MyForm.pdb
 E:\cpp projects\NativeProj\MyForm\obj\Debug\MyForm.csprojResolveAssemblyReference.cache
+D:\IT Modern Issues\NativeProj\NativeProj\MyForm\bin\Debug\MyForm.exe.config
+D:\IT Modern Issues\NativeProj\NativeProj\MyForm\obj\Debug\MyForm.exe
+D:\IT Modern Issues\NativeProj\NativeProj\MyForm\obj\Debug\MyForm.pdb
+D:\IT Modern Issues\NativeProj\NativeProj\MyForm\obj\Debug\MyForm.csprojResolveAssemblyReference.cache
+D:\IT Modern Issues\NativeProj\NativeProj\MyForm\obj\Debug\Interop.WMPLib.dll
+D:\IT Modern Issues\NativeProj\NativeProj\MyForm\obj\Debug\AxInterop.WMPLib.dll
+D:\IT Modern Issues\NativeProj\NativeProj\MyForm\obj\Debug\MyForm.csproj.ResolveComReference.cache
+D:\IT Modern Issues\NativeProj\NativeProj\MyForm\obj\Debug\MyForm.Form1.resources
+D:\IT Modern Issues\NativeProj\NativeProj\MyForm\obj\Debug\MyForm.Form2.resources
+D:\IT Modern Issues\NativeProj\NativeProj\MyForm\obj\Debug\MyForm.Properties.Resources.resources
+D:\IT Modern Issues\NativeProj\NativeProj\MyForm\obj\Debug\MyForm.csproj.GenerateResource.Cache
