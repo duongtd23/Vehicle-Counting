@@ -14,9 +14,9 @@ namespace CppWrapper {
 	public ref class MyVehicleCountingWrapper
 	{
 	public:
-		const int COUNT_DOWN_TO_TOP = 2;
-		const int COUNT_TOP_TO_DOWN = 1;
-		const int COUNT_COMBINE = 0;
+		const int COUNT_DOWN_TO_TOP = 1;
+		const int COUNT_TOP_TO_DOWN = 0;
+		const int COUNT_COMBINE = 2;
 		// constructor
 		MyVehicleCountingWrapper(System::String^ input, int count_type);
 

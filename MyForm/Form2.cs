@@ -38,10 +38,10 @@ namespace MyForm
 
 
                     //khởi tạo đối tượng
-                    myVehicleCountingWrapper = new MyVehicleCountingWrapper(open.FileName);
+                    myVehicleCountingWrapper = new MyVehicleCountingWrapper(open.FileName, myVehicleCountingWrapper.COUNT_DOWN_TO_TOP);
 
                     //bắt đầu đếm
-                    myVehicleCountingWrapper.functionMain("output/out.mp4");
+                    myVehicleCountingWrapper.functionMain();
                     axWindowsMediaPlayer1.URL = (open.FileName);
                 }
             }

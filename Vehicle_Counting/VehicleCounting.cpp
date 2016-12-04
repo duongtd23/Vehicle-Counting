@@ -311,17 +311,6 @@ bool MyVehicleCounting::checkIfBlobsCrossedTheLineDTT(std::vector<Blob> &blobs, 
 		if (blob.blnStillBeingTracked == true && blob.centerPositions.size() >= 2) {
 			int prevFrameIndex = (int)blob.centerPositions.size() - 2;
 			int currFrameIndex = (int)blob.centerPositions.size() - 1;
-			//bool check = true;
-			//
-			//int minLop = (blob.centerPositions.size() > 10) ? (blob.centerPositions.size() - 10) : 1;
-			////minLop = blob.centerPositions.size() - 1;
-			//for (int fi = blob.centerPositions.size() - 2; fi >= minLop; fi--) {
-			//	cv::Point point = blob.centerPositions[fi];
-			//	if (point.y > intHorizontalLinePosition) {
-			//		check = false;
-			//		break;
-			//	}
-			//}
 
 			if (blob.centerPositions[prevFrameIndex].y > intHorizontalLinePosition && 
 				blob.centerPositions[currFrameIndex].y <= intHorizontalLinePosition) {
@@ -356,7 +345,6 @@ bool MyVehicleCounting::checkIfBlobsCrossedTheLineTTD(std::vector<Blob> &blobs, 
 				blnAtLeastOneBlobCrossedTheLine = true;
 			}
 		}
-
 	}
 
 	return blnAtLeastOneBlobCrossedTheLine;
@@ -365,11 +353,9 @@ bool MyVehicleCounting::checkIfBlobsCrossedTheLineTTD(std::vector<Blob> &blobs, 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 void MyVehicleCounting::drawBlobInfoOnImage(std::vector<Blob> &blobs, cv::Mat &imgFrame2Copy) {
-
 	for (unsigned int i = 0; i < blobs.size(); i++) {
 
 		if (blobs[i].blnStillBeingTracked == true) {
-			//drawExtract(blobs[i].currentBoundingRect, imgFrame2Copy, i);
 
 			if (blobs[i].currentBoundingRect.area() > 0) {
 				cv::rectangle(imgFrame2Copy, blobs[i].currentBoundingRect, SCALAR_RED, 1);
@@ -388,21 +374,15 @@ void MyVehicleCounting::drawBlobInfoOnImage(std::vector<Blob> &blobs, cv::Mat &i
 void MyVehicleCounting::drawCarCountOnImage(int &carCount, int &motorCount, cv::Mat &imgFrame2Copy) {
 
 	int intFontFace = CV_FONT_HERSHEY_SIMPLEX;
-	//double dblFontScale = (imgFrame2Copy.rows * imgFrame2Copy.cols) / 200000.0;
-	double dblFontScale = 20;
-	int intFontThickness = (int)std::round(dblFontScale * 1.5);
+	double dblFontScale = 1;
+	int intFontThickness = (int)std::round(dblFontScale * 1.8);
 
 	cv::Size textSize = cv::getTextSize(std::to_string(carCount), intFontFace, dblFontScale, intFontThickness, 0);
-
-	/*cv::Point ptTextBottomLeftPosition;
-
-	ptTextBottomLeftPosition.x = imgFrame2Copy.cols - 1 - (int)((double)textSize.width * 1.25);
-	ptTextBottomLeftPosition.y = (int)((double)textSize.height * 1.25);
-*/
+	
 	cv::copyMakeBorder(imgFrame2Copy, imgFrame2Copy, 80, 0, 0, 0, cv::BORDER_CONSTANT, cv::Scalar(0, 0, 0, 0));
 	
 	cv::putText(imgFrame2Copy, "CAR: " + std::to_string(carCount), cv::Point(10, 30), intFontFace, dblFontScale, SCALAR_GREEN, intFontThickness);
-	cv::putText(imgFrame2Copy, "MOTOR: " + std::to_string(motorCount), cv::Point(10,50), intFontFace, dblFontScale, SCALAR_GREEN, intFontThickness);
+	cv::putText(imgFrame2Copy, "MOTOR: " + std::to_string(motorCount), cv::Point(10, 70), intFontFace, dblFontScale, SCALAR_GREEN, intFontThickness);
 }
 
 int MyVehicleCounting::getMotorCountDTT(){
