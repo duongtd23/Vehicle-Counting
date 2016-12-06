@@ -21,10 +21,7 @@ MyVehicleCounting::MyVehicleCounting(std::string input, int count_type){
  */
 int MyVehicleCounting::functionMain(std::string ouput, bool writeVideoOutput){
 	isCounting = true;
-	cv::VideoWriter video;
-	cv::Size video_size = cv::Size(640, 360);
-	if(writeVideoOutput)
-		video = cv::VideoWriter(ouput, CV_FOURCC('M', 'J', 'P', 'G'), 10, video_size, true);
+	
 	capVideo.open(input);
 
 	if (!capVideo.isOpened()) {                                                 // if unable to open video file
@@ -42,6 +39,11 @@ int MyVehicleCounting::functionMain(std::string ouput, bool writeVideoOutput){
 	//cv::Mat tempImg1, tempImg2;
 	capVideo.read(imgFrame1);
 	capVideo.read(imgFrame2);
+
+	cv::VideoWriter video;
+	cv::Size video_size = cv::Size(imgFrame1.cols, imgFrame1. rows + 80);
+	if (writeVideoOutput)
+		video = cv::VideoWriter(ouput, CV_FOURCC('M', 'J', 'P', 'G'), 10, video_size, true);
 
 	int intHorizontalLinePosition = (int)std::round((double)imgFrame1.rows * linePos);
 

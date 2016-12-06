@@ -104,7 +104,8 @@ namespace MyForm
 
         void startCounting()
         {
-            myVehicleCountingWrapper.functionMain();
+            
+            myVehicleCountingWrapper.functionMain(txtOutput.Text, checkSaveOutput.Checked);
         }
 
         void getNumberVehicle() {
