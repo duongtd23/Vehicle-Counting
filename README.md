@@ -1,8 +1,7 @@
-# NativeProj
+#Vehicle Counting
 
+Project counting motor and car with input is video
 
-Slide: https://drive.google.com/file/d/0B-euYRPdSRveU2RnZ05YckV4LTA/view?usp=sharing
+It is a native project with core C++ using Opencv for video processing and algorithm. GUI is C# windows form.
 
-
-Edit online: https://docs.google.com/presentation/d/14doc72jSbqcUdIaLhcyAJrDPjVuc-AtOEvXm9cP7Xsw/edit?usp=sharing
-
+Video demo: https://www.youtube.com/watch?v=Ze_QJvXtVOc
